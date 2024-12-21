@@ -18,7 +18,7 @@ const apolloServer = new ApolloServer({
 
 // Typescript: req has the type NextRequest
 const handler = startServerAndCreateNextHandler<NextRequest>(apolloServer, {
-    context: async (req: NextRequest) => ({ req }),
+    context: async (req: NextRequest, ctx: any) => ({ req, ctx }),
 });
 
 export { handler as GET, handler as POST };

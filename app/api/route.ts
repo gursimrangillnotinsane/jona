@@ -15,7 +15,6 @@ const startApolloServer = async () => {
             // Extract token from request headers if available
             return { token: 'token' }; // Use token from headers
         },
-        listen: { port: 4000 }, // Define the port for the server
     });
 
     console.log(`🚀  Server ready at ${url}`);

@@ -99,6 +99,7 @@ const MainComponent = () => {
       {data.entries.map((entry: any) => (
         <div key={entry.id}>
           <br />
+          <br />
           <h2>{entry.title}</h2>
           <p>{entry.content}</p>
           <p>{entry.date}</p>

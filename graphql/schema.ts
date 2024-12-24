@@ -11,13 +11,15 @@ type Query {
 type Dairy {
     id:ID
     title:String
+    from:String
+    to:String
     date:String
     content:String
   }
 
 type Mutation {
-    createEntry(title: String!, content: String!): Dairy!
-    editEntry(id: Int!, title: String!, content: String!): Dairy!
+    createEntry(title: String!, content: String!,from:String!,to:String! ): Dairy!
+    editEntry(id: Int!, title: String!, content: String!,from: String!, to: String! ): Dairy!
     deleteEntry(id: Int!): Dairy!
 }
 `;

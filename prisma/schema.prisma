@@ -18,5 +18,7 @@ model Dairy {
   id      Int    @id @default(autoincrement())
   date    String
   title   String
+  from    String
+  to      String
   content String
 }

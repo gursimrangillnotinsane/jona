@@ -32,8 +32,8 @@ export const resolvers = {
     Mutation: {
         // Creates a new dairy entry
         async createEntry(_: any, args: any, context: any) {
-            const { title, content } = args;
-            if (!title || !content) {
+            const { title, content, from, to } = args;
+            if (!title || !content || !from || !to) {
                 throw new Error("All fields (title, date, content) are required.");
             }
             try {
@@ -43,6 +43,8 @@ export const resolvers = {
                         title,
                         date: new Date().toLocaleDateString('en-GB'),
                         content,
+                        from,
+                        to
                     },
                 });
                 return entry;
@@ -53,8 +55,8 @@ export const resolvers = {
         },
 
         async editEntry(_: any, args: any, context: any) {
-            const { id, title, content } = args;
-            if (!id || !title || !content) {
+            const { id, title, content, from, to } = args;
+            if (!id || !title || !content || !from || !to) {
                 throw new Error("All fields (id, title, content) are required.");
             }
             try {
@@ -63,6 +65,8 @@ export const resolvers = {
                     data: {
                         title,
                         content,
+                        from,
+                        to,
                         date: new Date().toLocaleDateString('en-GB'),
                     },
                 });

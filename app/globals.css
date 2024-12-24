@@ -3,19 +3,51 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #872c74;
+  --background: #fcd6f47e;
+  --foreground: #d331b0;
+  --buttontext:#fff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #a724a3;
-    --foreground: #ededed;
-  }
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+h1{
+  font-size: 3rem;
+}
+h2{
+  font-size: 2rem;
+}
+h3{
+  font-size: 1.5rem;
+}
+h4{
+  font-size: 1.2rem;
+}
+h5{
+  font-size: 1rem;
+}
+h6{
+  font-size: 0.8rem;
 }
 
+button{
+  padding: 0.5rem 1rem;
+  border: none;
+  background: var(--foreground);
+  color: var(--buttontext);
+  cursor: pointer;
+  border-radius: 15rem;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+button:hover{
+  background: #a90285;
+  transform: scale(1.1);
+}
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+

@@ -1,14 +1,16 @@
-"use client";
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { refresh } from "./mainComponent"; // Import the refresh function
 
 const CREATE_ENTRY = gql`
-  mutation ($title: String!, $content: String!) {
-    createEntry(title: $title, content: $content) {
+  mutation ($title: String!, $content: String!, $from: String!, $to: String!) {
+    createEntry(title: $title, content: $content, from: $from, to: $to) {
       id
       title
       content
+      from
+      to
     }
   }
 `;
@@ -17,21 +19,22 @@ const AddEntry = () => {
     const router = useRouter();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [from, setFrom] = useState("");
+    const [to, setTo] = useState("");
     const [createEntryMutation] = useMutation(CREATE_ENTRY);
-    const [errors, setErrors] = useState<string[]>([]);
-    const [loading, setLoading] = useState(false); // Added loading state
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true); // Set loading to true when submission starts
+        setLoading(true);
         try {
-            await createEntryMutation({ variables: { title, content } });
+            await createEntryMutation({ variables: { title, content, from, to } });
+            refresh(); // Call the refresh function to reload data
             router.push("/");
         } catch (err: any) {
-            setErrors(err.graphQLErrors.map((error: any) => error.message));
             console.error("Error creating entry:", err);
         } finally {
-            setLoading(false); // Reset loading state after submission completes
+            setLoading(false);
         }
     };
 
@@ -46,6 +49,22 @@ const AddEntry = () => {
                 onChange={(e) => setTitle(e.target.value)}
                 className="block w-full my-2 p-2 border"
             />
+            <input
+                type="text"
+                name="from"
+                placeholder="from"
+                value={from}
+                onChange={(e) => setFrom(e.target.value)}
+                className="block w-full my-2 p-2 border"
+            />
+            <input
+                type="text"
+                name="to"
+                placeholder="to"
+                value={to}
+                onChange={(e) => setTo(e.target.value)}
+                className="block w-full my-2 p-2 border"
+            />
             <textarea
                 name="content"
                 placeholder="Content"
@@ -53,19 +72,10 @@ const AddEntry = () => {
                 onChange={(e) => setContent(e.target.value)}
                 className="block w-full my-2 p-2 border"
             />
-            {errors.length > 0 && (
-                <div>
-                    {errors.map((error) => (
-                        <p key={error} className="text-red-500">
-                            {error}
-                        </p>
-                    ))}
-                </div>
-            )}
             <button
                 type="submit"
                 className={`p-2 text-white ${loading ? "bg-gray-400" : "bg-green-500"}`}
-                disabled={loading} // Disable button while loading
+                disabled={loading}
             >
                 {loading ? "Loading..." : "Add Entry"}
             </button>

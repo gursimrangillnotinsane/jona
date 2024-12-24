@@ -1,16 +1,14 @@
 "use client";
-import { NextPage } from 'next';
-import { ApolloProvider } from '@apollo/client'
-import client from '../lib/client'
-import MainComponent from '../components/mainComponent'
-import Login from '../components/login'
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-
+import { ApolloProvider } from '@apollo/client';
+import client from '../lib/client';
+import MainComponent from '@/components/mainComponent';
+import { useUser } from "@stackframe/stack";
 
 export default function Home() {
-
+  useUser({ or: 'redirect' });
   return (
-    <Login />
+    <ApolloProvider client={client}>
+      <MainComponent />
+    </ApolloProvider>
   );
 }

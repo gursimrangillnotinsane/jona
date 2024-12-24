@@ -14,6 +14,18 @@ export const resolvers = {
                 throw new Error("Failed to fetch entries.");
             }
         },
+        async entry(_: any, args: any, context: any) {
+            try {
+                const entry = await prismaClient.dairy.findUnique({
+                    where: { id: parseInt(args.id, 10) },
+                });
+                return entry;
+            }
+            catch (error) {
+                console.error("Error fetching entry:", error);
+                throw new Error("Failed to fetch entry.");
+            }
+        },
     },
 
     // 
@@ -79,4 +91,5 @@ export const resolvers = {
         }
     },
 };
+
 export default resolvers

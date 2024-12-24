@@ -4,6 +4,7 @@ const typeDefs = gql`
 
 type Query {
     entries: [Dairy!]!
+    entry(id: Int!): Dairy!
 }
 
 

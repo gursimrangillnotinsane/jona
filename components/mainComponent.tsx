@@ -41,12 +41,15 @@ const MainComponent = () => {
       </div>
       <div className="flex flex-col items-center">
         {data.entries.map((entry: any) => (
-          <div key={entry.id} className="border p-4 my-4 mx-auto w-2/3">
+          <div key={entry.id} className="border p-4 my-4 w-full">
             <h2>{entry.title}</h2>
+            <div className="flex items-end flex-col" >
+
+              <p>from - {entry.from}</p>
+              <p>to - {entry.to}</p>
+            </div>
             <MDXRendering content={entry.content} />
-            {/* <MDXRemote source={entry.content} /> */}
-            <p>from - {entry.from}</p>
-            <p>to - {entry.to}</p>
+
             <div className="flex justify-end gap-4">
               <button onClick={() => handleEdit(entry.id)}>Edit</button>
             </div>

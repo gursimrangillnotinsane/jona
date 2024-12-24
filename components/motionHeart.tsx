@@ -1,155 +1,57 @@
-"use client"
+"use client";
 
-import * as motion from "motion/react-client"
+import * as motion from "motion/react-client";
 
 const draw = {
     hidden: { pathLength: 0, opacity: 0 },
     visible: (i: number) => {
-        const delay = i * 0.5
+        const delay = i * 0.5;
         return {
             pathLength: 1,
             opacity: 1,
             transition: {
                 pathLength: { delay, type: "spring", duration: 1.5, bounce: 0 },
-                opacity: { delay, duration: 0.01 },
+                opacity: { delay, duration: 0.5 }, // Adjusted for text visibility
             },
-        }
+        };
     },
-}
+};
 
 export default function PathDrawing() {
     return (
         <motion.svg
             width="600"
             height="600"
-            viewBox="0 0 600 600"
+            viewBox="0 0 100 100"
             initial="hidden"
             animate="visible"
             style={image}
         >
-            <motion.circle
-                className="circle-path"
-                cx="100"
-                cy="100"
-                r="80"
+            {/* Heart Path */}
+            <motion.path
+                d="M1,21c0,20,31,38,31,38s31-18,31-38
+	c0-8.285-6-16-15-16c-8.285,0-16,5.715-16,14c0-8.285-7.715-14-16-14C7,5,1,12.715,1,21z"
                 stroke="#ff0088"
                 variants={draw}
                 custom={1}
                 style={shape}
             />
-            <motion.line
-                x1="220"
-                y1="30"
-                x2="360"
-                y2="170"
-                stroke="#4ff0b7"
-                variants={draw}
+
+            {/* "I Love You" Text */}
+            <motion.text
+                x="30%"
+                y="75%" // Adjusts position of the text
+                textAnchor="middle"
+                fontSize="10"
+                fill="#ff0088"
+                variants={draw} // Animation from 'draw' object
                 custom={2}
-                style={shape}
-            />
-            <motion.line
-                x1="220"
-                y1="170"
-                x2="360"
-                y2="30"
-                stroke="#4ff0b7"
-                variants={draw}
-                custom={2.5}
-                style={shape}
-            />
-            <motion.rect
-                width="140"
-                height="140"
-                x="410"
-                y="30"
-                rx="20"
-                stroke="#0d63f8"
-                variants={draw}
-                custom={3}
-                style={shape}
-            />
-            <motion.circle
-                cx="100"
-                cy="300"
-                r="80"
-                stroke="#0d63f8"
-                variants={draw}
-                custom={2}
-                style={shape}
-            />
-            <motion.line
-                x1="220"
-                y1="230"
-                x2="360"
-                y2="370"
-                stroke="#ff0088"
-                custom={3}
-                variants={draw}
-                style={shape}
-            />
-            <motion.line
-                x1="220"
-                y1="370"
-                x2="360"
-                y2="230"
-                stroke="#ff0088"
-                custom={3.5}
-                variants={draw}
-                style={shape}
-            />
-            <motion.rect
-                width="140"
-                height="140"
-                x="410"
-                y="230"
-                rx="20"
-                stroke="#4ff0b7"
-                custom={4}
-                variants={draw}
-                style={shape}
-            />
-            <motion.circle
-                cx="100"
-                cy="500"
-                r="80"
-                stroke="#4ff0b7"
-                variants={draw}
-                custom={3}
-                style={shape}
-            />
-            <motion.line
-                x1="220"
-                y1="430"
-                x2="360"
-                y2="570"
-                stroke="#0d63f8"
-                variants={draw}
-                custom={4}
-                style={shape}
-            />
-            <motion.line
-                x1="220"
-                y1="570"
-                x2="360"
-                y2="430"
-                stroke="#0d63f8"
-                variants={draw}
-                custom={4.5}
-                style={shape}
-            />
-            <motion.rect
-                width="140"
-                height="140"
-                x="410"
-                y="430"
-                rx="20"
-                stroke="#ff0088"
-                variants={draw}
-                custom={5}
-                style={shape}
-            />
+                style={{ fontFamily: "Arial, sans-serif" }}
+            >
+                I love you
+            </motion.text>
         </motion.svg>
-    )
+    );
 }
 
 /**
@@ -158,10 +60,10 @@ export default function PathDrawing() {
 
 const image: React.CSSProperties = {
     maxWidth: "80vw",
-}
+};
 
 const shape: React.CSSProperties = {
-    strokeWidth: 10,
+    strokeWidth: 2,
     strokeLinecap: "round",
     fill: "transparent",
-}
+};

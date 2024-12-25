@@ -20,5 +20,6 @@ model Dairy {
   title   String
   from    String
   to      String
+  user    String
   content String
 }

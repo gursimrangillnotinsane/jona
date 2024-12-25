@@ -15,11 +15,12 @@ type Dairy {
     to:String
     date:String
     content:String
+    user:String
   }
 
 type Mutation {
-    createEntry(title: String!, content: String!,from:String!,to:String! ): Dairy!
-    editEntry(id: Int!, title: String!, content: String!,from: String!, to: String! ): Dairy!
+    createEntry(title: String!, content: String!,from:String!,to:String!,user:String! ): Dairy!
+    editEntry(id: Int!, title: String!, content: String!,from: String!, to: String!,user:String! ): Dairy!
     deleteEntry(id: Int!): Dairy!
 }
 `;

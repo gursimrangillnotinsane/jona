@@ -1,21 +1,47 @@
+"use client";
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { refresh } from "./mainComponent"; // Import the refresh function
+import { useUser } from "@stackframe/stack"
+import {
+    MDXEditor,
+    UndoRedo,
+    BoldItalicUnderlineToggles,
+    toolbarPlugin,
+    MDXEditorMethods,
+    headingsPlugin,
+    listsPlugin,
+    ListsToggle,
+    thematicBreakPlugin,
+    InsertThematicBreak,
+    CreateLink,
+    linkDialogPlugin,
+    linkPlugin,
+    ChangeAdmonitionType,
+    BlockTypeSelect,
+
+} from '@mdxeditor/editor';
+import React from "react";
+import '@mdxeditor/editor/style.css';
+import './toobar.css';
+
 
 const CREATE_ENTRY = gql`
-  mutation ($title: String!, $content: String!, $from: String!, $to: String!) {
-    createEntry(title: $title, content: $content, from: $from, to: $to) {
+  mutation ($title: String!, $content: String!, $from: String!, $to: String!,$user:String!) {
+    createEntry(title: $title, content: $content, from: $from, to: $to, user:$user) {
       id
       title
       content
       from
       to
+      user
     }
   }
 `;
 
 const AddEntry = () => {
+    const ref = React.useRef<MDXEditorMethods>(null);
     const router = useRouter();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
@@ -23,12 +49,16 @@ const AddEntry = () => {
     const [to, setTo] = useState("");
     const [createEntryMutation] = useMutation(CREATE_ENTRY);
     const [loading, setLoading] = useState(false);
+    const loguser = useUser({ or: "redirect" });
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
+
         setLoading(true);
         try {
-            await createEntryMutation({ variables: { title, content, from, to } });
+            const user = loguser.id;
+            console.log(user, title, content, from, to);
+
+            await createEntryMutation({ variables: { title, content, from, to, user } });
             refresh(); // Call the refresh function to reload data
             router.push("/");
         } catch (err: any) {
@@ -38,55 +68,73 @@ const AddEntry = () => {
         }
     };
 
+    useEffect(() => {
+        setTitle("HAPPY ANNIVERSARY");
+        setFrom(loguser.displayName);
+        setTo("TO MY LOVE");
+        setContent("# I LOVE YOU");
+
+    }, []);
+
     return (
-        <form onSubmit={handleSubmit} className="p-6 max-w-md mx-auto">
-            <h1 className="text-lg font-bold mb-4">Create Entry</h1>
-            <input
-                type="text"
-                name="title"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="block w-full my-2 p-2 border"
-            />
-            <input
-                type="text"
-                name="from"
-                placeholder="from"
-                value={from}
-                onChange={(e) => setFrom(e.target.value)}
-                className="block w-full my-2 p-2 border"
-            />
-            <input
-                type="text"
-                name="to"
-                placeholder="to"
-                value={to}
-                onChange={(e) => setTo(e.target.value)}
-                className="block w-full my-2 p-2 border"
-            />
-            <textarea
-                name="content"
-                placeholder="Content"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                className="block w-full my-2 p-2 border"
-            />
-            <button
-                type="submit"
-                className={`p-2 text-white ${loading ? "bg-gray-400" : "bg-green-500"}`}
-                disabled={loading}
-            >
-                {loading ? "Loading..." : "Add Entry"}
-            </button>
-            <button
-                type="button"
-                onClick={() => router.push("/")}
-                className="p-2 bg-gray-500 text-white ml-2"
-            >
-                Cancel
-            </button>
-        </form>
+        <>
+            <div className="addCard w-[75%] mx-auto p-6 h-4/5 flex flex-col m-6">
+                <div className='flex'>
+                    <h3>Title - </h3>
+                    <MDXEditor
+                        markdown={" HAPPY ANNIVERSARY"}
+                        onChange={(e) => setTitle(e)}
+                        plugins={[headingsPlugin()]}
+                    />
+                </div>
+
+                <div className='flex'>
+                    <h3>From - </h3>
+                    <MDXEditor
+                        markdown={loguser.displayName}
+                        onChange={(e) => setFrom(e)}
+                    /></div>
+
+                <div className='flex'>
+                    <h3>To - </h3>
+                    <MDXEditor
+                        markdown={"TO MY LOVE"}
+                        onChange={(e) => setTo(e)}
+                    /></div>
+
+                <div className='flex'>
+                    <h3>Content - </h3>
+                    <MDXEditor
+
+                        markdown={"# I LOVE YOU"}
+                        ref={ref}
+                        onChange={(e) => setContent(e)}
+                        plugins={[
+                            listsPlugin(),
+                            thematicBreakPlugin(),
+                            linkPlugin(),
+                            linkDialogPlugin(),
+                            headingsPlugin(),
+                            toolbarPlugin({
+                                toolbarClassName: 'my-classname',
+                                toolbarContents: () => (
+                                    <>
+                                        {''}
+                                        <UndoRedo />
+                                        <BoldItalicUnderlineToggles />
+                                        <ListsToggle />
+                                        <InsertThematicBreak />
+                                        <CreateLink />
+                                        <BlockTypeSelect />
+                                    </>
+                                ),
+                            }),
+                        ]}
+                    /></div>
+                <button onClick={() => handleSubmit()}>Save Changes</button>
+            </div>
+
+        </>
     );
 };
 

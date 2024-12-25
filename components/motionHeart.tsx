@@ -17,7 +17,7 @@ const draw = {
     },
 };
 
-export default function PathDrawing() {
+export default function PathDrawing({ color }: { color: string }) {
     return (
         <motion.svg
             width="600"
@@ -31,25 +31,12 @@ export default function PathDrawing() {
             <motion.path
                 d="M1,21c0,20,31,38,31,38s31-18,31-38
 	c0-8.285-6-16-15-16c-8.285,0-16,5.715-16,14c0-8.285-7.715-14-16-14C7,5,1,12.715,1,21z"
-                stroke="#ff0088"
+                stroke={color}
                 variants={draw}
                 custom={1}
                 style={shape}
             />
 
-            {/* "I Love You" Text */}
-            <motion.text
-                x="30%"
-                y="75%" // Adjusts position of the text
-                textAnchor="middle"
-                fontSize="10"
-                fill="#ff0088"
-                variants={draw} // Animation from 'draw' object
-                custom={2}
-                style={{ fontFamily: "Arial, sans-serif" }}
-            >
-                I love you
-            </motion.text>
         </motion.svg>
     );
 }
@@ -60,6 +47,7 @@ export default function PathDrawing() {
 
 const image: React.CSSProperties = {
     maxWidth: "80vw",
+    padding: "1rem",
 };
 
 const shape: React.CSSProperties = {

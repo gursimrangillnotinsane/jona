@@ -10,13 +10,11 @@ export default function Home() {
   useUser({ or: 'redirect' });
   return (
     <>
-      {/* <CustomCursor /> */}
-      <div className='flex justify-evenly'>
-        <PathDrawing />
-        <ApolloProvider client={client}>
-          <MainComponent />
-        </ApolloProvider>
-      </div>
+
+      <ApolloProvider client={client}>
+        <MainComponent />
+      </ApolloProvider>
+
     </>
   );
 }

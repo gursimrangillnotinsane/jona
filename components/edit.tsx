@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { refresh } from "./mainComponent";
 import '@mdxeditor/editor/style.css';
+import { useUser } from "@stackframe/stack"
 import {
     MDXEditor,
     UndoRedo,
@@ -37,13 +38,14 @@ const GET_ENTRY = gql`
 `;
 
 const EDIT_ENTRY = gql`
-  mutation ($editEntryId: Int!, $title: String!, $content: String!, $from: String!, $to: String!) {
-    editEntry(id: $editEntryId, title: $title, content: $content, from: $from, to: $to) {
+  mutation ($editEntryId: Int!, $title: String!, $content: String!, $from: String!, $to: String!, $user: String!) {
+    editEntry(id: $editEntryId, title: $title, content: $content, from: $from, to: $to, user: $user) {
       id
       title
       content
       from
       to
+      user
     }
   }
 `;
@@ -69,7 +71,7 @@ const Edit = ({ id }: { id: string }) => {
     const [content, setContent] = useState("");
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
-
+    const logUser = useUser({ or: "redirect" });
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
 
@@ -83,8 +85,9 @@ const Edit = ({ id }: { id: string }) => {
 
     const handleEditSubmit = async () => {
         try {
+            const user = logUser.id;
             await editEntryMutation({
-                variables: { editEntryId: parseInt(id as string, 10), title, content, from, to },
+                variables: { editEntryId: parseInt(id as string, 10), title, content, from, to, user },
             });
             router.push("/");
         } catch (err) {

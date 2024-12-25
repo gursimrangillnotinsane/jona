@@ -1,0 +1,15 @@
+.mdxeditor-toolbar{
+
+    background-color:rgb(214, 107, 215);
+  
+  }
+
+  .mdxeditor {
+    margin-left:1rem;
+    background-color: rgba(243, 187, 233, 0.425);
+    /* box-shadow: 0 0 10px 1px rgb(224 25 215 / 40%);  */
+    border-bottom: 1px solid rgb(248, 241, 242);
+    padding:.25rem;
+    border-radius: .5rem;
+    }
+    

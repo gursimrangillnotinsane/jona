@@ -31,16 +31,16 @@ h5{
 h6{
   font-size: 0.8rem;
 }
-
-button{
-  padding: 0.5rem 1rem;
-  border: none;
-  background: var(--foreground);
-  color: var(--buttontext);
-  cursor: pointer;
-  border-radius: 15rem;
-  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-}
+  
+  button{
+    padding: 0.5rem 1rem;
+    border: none;
+    background: var(--foreground);
+    color: var(--buttontext);
+    cursor: pointer;
+    border-radius: 15rem;
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
 button:hover{
   background: #a90285;
   transform: scale(1.1);
@@ -50,4 +50,38 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* .card{
+ background-color: #fcd6f4b8;
+ box-shadow: 0 0 10px 1px rgb(224 25 215 / 40%);
+ max-height: 400px;
+ overflow-y: hidden;
+} */
+
+.card {
+  background: rgb(252,214,244);
+  background: linear-gradient(180deg, rgba(252,214,244,1) 0%, rgba(240,240,240,1) 100%);
+  box-shadow: 0 0 10px 1px rgb(224 25 215 / 40%);
+  max-height: 400px;
+  overflow-y: hidden;
+  position: relative;
+  padding-bottom: 40px; /* Space for the button */
+  transition: max-height 0.3s ease;
+}
+
+.card.expanded {
+  max-height: none;
+}
+
+.addCard > div{
+  padding-top:1rem;
+  align-items: center;
+}
+.addCard{
+  /* background-color: #c34ea958; */
+  border-radius: 1rem;
+}
+
+
+
 

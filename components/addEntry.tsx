@@ -111,7 +111,7 @@ const AddEntry = () => {
                             onChange={(e) => setTo(e)}
                         /></div>
 
-                    <div className='flex'>
+                    <div className='flex lg:flex-row flex-col'>
                         <h3>Content - </h3>
                         <MDXEditor
 

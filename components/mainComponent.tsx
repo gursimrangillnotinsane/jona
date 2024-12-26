@@ -40,6 +40,7 @@ const MainComponent = () => {
   };
 
   const toggleExpand = () => {
+    console.log("toggling");
     setIsExpanded(!isExpanded);
   };
 
@@ -54,12 +55,12 @@ const MainComponent = () => {
         <PathDrawing color={"#000"} />
       </div>
       <section className="flex flex-col items-center ">
-        <div className="flex  justify-end gap-8 p-4  w-full sticky top-0 z-[60] header">
+        <div className="flex  justify-end gap-8 p-4   w-full sticky top-0 z-[60] header">
           <h3 >I love you so</h3>
           <button onClick={() => router.push("/create")}>Add Entry</button>
           <UserButton />
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center pb-10">
           {data.entries.map((entry: any) => (
             <div key={entry.id} className={`card border p-4 my-4 lg:w-2/3 w-3/4 ${isExpanded ? "expanded" : ""}`}>
 
@@ -71,12 +72,16 @@ const MainComponent = () => {
               </div>
 
               <MDXRendering content={entry.content} />
-              <button className="absolute lg:left-[45%] left-[30%] bottom-3" onClick={toggleExpand}>
+              <button
+                className={`mt-4 py-2 px-4 text-sm font-bold rounded border lg:text-base lg:px-6 absolute bottom-0 right-4 z-[99]`}
+                onClick={toggleExpand}
+              >
                 {isExpanded ? "View Less" : "View More"}
               </button>
               {user.id == entry.user &&
                 <div className="flex justify-start gap-4 z-50">
                   <button onClick={() => handleEdit(entry.id)}>Edit</button>
+
                 </div>}
             </div>
 

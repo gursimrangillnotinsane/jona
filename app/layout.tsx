@@ -4,7 +4,6 @@ import { stackServerApp } from "../stack";
 import { Lobster, Pridi } from "next/font/google";
 
 import "./globals.css";
-import Head from "next/head";
 
 
 const lobster = Lobster({
@@ -22,6 +21,9 @@ const pridi = Pridi({
 export const metadata: Metadata = {
   title: "Love Secrets",
   description: "A place to share our love",
+  icons: {
+    icon: "/icon.ico", // Path to your favicon in the `public` folder
+  },
 };
 
 export default function RootLayout({
@@ -31,9 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-      </Head>
+
       <body
         className={`${lobster.variable}  ${pridi.variable} antialiased`}
       ><StackProvider app={stackServerApp}><StackTheme>

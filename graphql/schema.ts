@@ -23,6 +23,8 @@ type Mutation {
     editEntry(id: Int!, title: String!, content: String!,from: String!, to: String!,user:String! ): Dairy!
     deleteEntry(id: Int!): Dairy!
 }
+
+
 `;
 
 export default typeDefs

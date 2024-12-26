@@ -54,16 +54,12 @@ font-family: var(--font-pridi);
 h1,h2,h2,h4,h5,h6{
   font-family: var(--font-lobster);
 }
-/* .card{
- background-color: #fcd6f4b8;
- box-shadow: 0 0 10px 1px rgb(224 25 215 / 40%);
- max-height: 400px;
- overflow-y: hidden;
-} */
-
+::selection{
+  background-color: #d331b05c;
+}
 .card {
   background: rgb(252,214,244);
-  background: linear-gradient(180deg, rgba(252,214,244,1) 0%, rgba(240,240,240,1) 100%);
+  background:linear-gradient(180deg, rgb(238 180 192) 0%, rgba(240, 240, 240, 1) 100%);
   box-shadow: 0 0 10px 1px rgb(224 25 215 / 40%);
   max-height: 400px;
   overflow-y: hidden;
@@ -71,7 +67,9 @@ h1,h2,h2,h4,h5,h6{
   padding-bottom: 40px; /* Space for the button */
   transition: max-height 0.3s ease;
 }
-
+.header{
+  background-color: rgb(239 183 194);
+}
 .card.expanded {
   max-height: none;
 }
@@ -79,10 +77,6 @@ h1,h2,h2,h4,h5,h6{
 .addCard > div{
   padding-top:1rem;
   align-items: center;
-}
-.addCard{
-  /* background-color: #c34ea958; */
-  border-radius: 1rem;
 }
 
 

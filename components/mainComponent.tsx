@@ -47,14 +47,14 @@ const MainComponent = () => {
   return (
     <>
 
-      <div className="w-1/4 fixed left-0">
+      <div className="w-1/4 fixed left-0 top-12">
         <PathDrawing color={"#ff0088"} />
       </div>
       <div className='w-1/4 fixed right-5 top-1/3 transform rotate-45 z-10'>
         <PathDrawing color={"#000"} />
       </div>
       <section className="flex flex-col items-center ">
-        <div className="flex  justify-end gap-8 p-4  w-full sticky top-0 z-[60] bg-pink-200">
+        <div className="flex  justify-end gap-8 p-4  w-full sticky top-0 z-[60] header">
           <h3 >I love you so</h3>
           <button onClick={() => router.push("/create")}>Add Entry</button>
           <UserButton />

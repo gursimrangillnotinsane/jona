@@ -107,6 +107,10 @@ const Edit = ({ id }: { id: string }) => {
     };
 
     const handleDelete = async () => {
+        const userConfirmed = window.confirm("Are you sure you want to delete this entry?");
+        if (!userConfirmed) {
+            return; // If the user cancels, stop further execution
+        }
         try {
             await toast.promise(
                 deleteEntryMutation({
@@ -146,7 +150,7 @@ const Edit = ({ id }: { id: string }) => {
                     /> */}
                     <div className="flex items-center">
                         <h3>From - </h3>
-                        {data.entry.from}
+                        <h4 className="uppercase ">{data.entry.from}</h4>
                     </div>
                     <div className="flex items-center">
                         <h3>To - </h3>

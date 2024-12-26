@@ -16,6 +16,7 @@ export const ENTRIES_QUERY = gql`
       from
       to
       user
+      date
     }
   }
 `;
@@ -70,7 +71,7 @@ const MainComponent = () => {
                 <p>from - <strong>{entry.from}</strong></p>
                 <p>to - <strong>{entry.to}</strong> </p>
               </div>
-
+              <p>{entry.date}</p>
               <MDXRendering content={entry.content} />
               <button
                 className={`mt-4 py-2 px-4 text-sm font-bold rounded border lg:text-base lg:px-6 absolute bottom-0 right-4 z-[99]`}

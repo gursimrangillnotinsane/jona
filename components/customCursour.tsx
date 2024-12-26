@@ -32,7 +32,7 @@ const CustomCursor = () => {
             // Reset click state after 800 milliseconds
             setTimeout(() => {
                 setClicked(false);
-            }, 800);
+            }, 200);
         };
         // Event listener for mouseover (hover) on HTML elements
         const handleMouseOver = (e) => {

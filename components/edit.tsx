@@ -24,6 +24,9 @@ import {
 
 } from '@mdxeditor/editor';
 import React from "react";
+import './edit.css'
+import toast, { Toaster } from 'react-hot-toast';
+import LoadingApp from "./loading";
 
 const GET_ENTRY = gql`
   query ($id: Int!) {
@@ -72,7 +75,9 @@ const Edit = ({ id }: { id: string }) => {
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
     const logUser = useUser({ or: "redirect" });
-    if (loading) return <p>Loading...</p>;
+    if (loading) return (
+        <LoadingApp />
+    );
     if (error) return <p>Error: {error.message}</p>;
 
     // Prefill form with entry data
@@ -86,9 +91,15 @@ const Edit = ({ id }: { id: string }) => {
     const handleEditSubmit = async () => {
         try {
             const user = logUser.id;
-            await editEntryMutation({
-                variables: { editEntryId: parseInt(id as string, 10), title, content, from, to, user },
-            });
+            await toast.promise(
+                editEntryMutation({ variables: { editEntryId: parseInt(id as string, 10), title, content, from, to, user } }),
+                {
+                    loading: "Editing your entry my love...",
+                    success: "Entry saved successfully!",
+                    error: "Failed to edit the entry. :( Please try again.",
+                }
+            );
+
             router.push("/");
         } catch (err) {
             console.error("Error updating entry:", err);
@@ -97,9 +108,16 @@ const Edit = ({ id }: { id: string }) => {
 
     const handleDelete = async () => {
         try {
-            await deleteEntryMutation({
-                variables: { deleteEntryId: parseInt(id as string, 10) },
-            });
+            await toast.promise(
+                deleteEntryMutation({
+                    variables: { deleteEntryId: parseInt(id as string, 10) },
+                }),
+                {
+                    loading: "Deleting your entry my love...",
+                    success: "Entry deleted successfully!",
+                    error: "Failed to delete the entry. :( Please try again.",
+                }
+            );
             refresh();
             router.push("/");
         } catch (err) {
@@ -109,48 +127,67 @@ const Edit = ({ id }: { id: string }) => {
 
     return (
         <>
-            <div className="w-2/3 mx-auto p-6">
-                <MDXEditor
-                    markdown={data.entry.title}
-                    onChange={(e) => setTitle(e)}
-                    plugins={[headingsPlugin()]}
-                />
-                <MDXEditor
-                    markdown={data.entry.from}
-                    onChange={(e) => setFrom(e)}
-                />
-                <MDXEditor
-                    markdown={data.entry.to}
-                    onChange={(e) => setTo(e)}
-                />
-                <MDXEditor
-                    markdown={data.entry.content}
-                    ref={ref}
-                    onChange={(e) => setContent(e)}
-                    plugins={[
-                        listsPlugin(),
-                        thematicBreakPlugin(),
-                        linkPlugin(),
-                        linkDialogPlugin(),
-                        headingsPlugin(),
-                        toolbarPlugin({
-                            toolbarClassName: 'my-classname',
-                            toolbarContents: () => (
-                                <>
-                                    {''}
-                                    <UndoRedo />
-                                    <BoldItalicUnderlineToggles />
-                                    <ListsToggle />
-                                    <InsertThematicBreak />
-                                    <CreateLink />
-                                    <BlockTypeSelect />
-                                </>
-                            ),
-                        }),
-                    ]}
-                />
-                <button onClick={() => handleEditSubmit()}>Save Changes</button>
-                <button onClick={() => handleDelete()}>Delete Entry</button>
+            <div className="mainEditDiv min-h-screen">
+                <Toaster />
+
+                <div className="lg:w-2/3 w-[85%] mx-auto flex flex-col justify-center gap-6 pb-4">
+                    <h2>Editing cuz ur dumb</h2>
+                    <div className="flex items-center">
+                        <h3>Title - </h3>
+                        <MDXEditor
+                            markdown={data.entry.title}
+                            onChange={(e) => setTitle(e)}
+                            plugins={[headingsPlugin()]}
+                        />
+                    </div>
+                    {/* <MDXEditor
+                        markdown={data.entry.from}
+                        onChange={(e) => setFrom(e)}
+                    /> */}
+                    <div className="flex items-center">
+                        <h3>From - </h3>
+                        {data.entry.from}
+                    </div>
+                    <div className="flex items-center">
+                        <h3>To - </h3>
+
+                        <MDXEditor
+                            markdown={data.entry.to}
+                            onChange={(e) => setTo(e)}
+                        />
+                    </div>
+                    <MDXEditor
+                        markdown={data.entry.content}
+                        ref={ref}
+                        onChange={(e) => setContent(e)}
+                        plugins={[
+                            listsPlugin(),
+                            thematicBreakPlugin(),
+                            linkPlugin(),
+                            linkDialogPlugin(),
+                            headingsPlugin(),
+                            toolbarPlugin({
+                                toolbarClassName: 'my-classname',
+                                toolbarContents: () => (
+                                    <>
+                                        {''}
+                                        <UndoRedo />
+                                        <BoldItalicUnderlineToggles />
+                                        <ListsToggle />
+                                        <InsertThematicBreak />
+                                        <CreateLink />
+                                        <BlockTypeSelect />
+                                    </>
+                                ),
+                            }),
+                        ]}
+                    />
+                    <div className="flex gap-4 w-full ml-4">
+                        <button onClick={() => handleEditSubmit()}>Save Changes</button>
+                        <button className="delete" onClick={() => handleDelete()}>Delete Entry</button>
+                        <button onClick={() => router.push("/")}>Cancel</button>
+                    </div>
+                </div>
             </div>
         </>
 

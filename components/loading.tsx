@@ -13,7 +13,7 @@ const loadingApp = () => {
 
 
             </div>
-            <div id="loving">Loving...</div>
+            <div id="loving"><h1>Loving...</h1></div>
         </>
     );
 };

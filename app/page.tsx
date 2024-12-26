@@ -10,7 +10,7 @@ export default function Home() {
   useUser({ or: 'redirect' });
   return (
     <>
-
+      <CustomCursor />
       <ApolloProvider client={client}>
         <MainComponent />
       </ApolloProvider>

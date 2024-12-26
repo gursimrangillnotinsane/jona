@@ -53,24 +53,25 @@ const MainComponent = () => {
       <div className='w-1/4 fixed right-5 top-1/3 transform rotate-45 z-10'>
         <PathDrawing color={"#000"} />
       </div>
-      <section>
-        <div className="flex justify-end gap-8 p-6 fixed w-full">
+      <section className="flex flex-col items-center ">
+        <div className="flex  justify-end gap-8 p-4  w-full sticky top-0 z-[60] bg-pink-200">
+          <h3 >I love you so</h3>
           <button onClick={() => router.push("/create")}>Add Entry</button>
           <UserButton />
         </div>
         <div className="flex flex-col items-center">
           {data.entries.map((entry: any) => (
-            <div key={entry.id} className={`card border p-4 my-4 w-2/3 ${isExpanded ? "expanded" : ""}`}>
+            <div key={entry.id} className={`card border p-4 my-4 lg:w-2/3 w-3/4 ${isExpanded ? "expanded" : ""}`}>
 
               <h2>{entry.title}</h2>
 
-              <div className="border-x-0 border-y-2 border-white  flex items-end flex-col p-2 mb-5" >
-                <p>from - {entry.from}</p>
-                <p>to - {entry.to}</p>
+              <div className="border-x-0 border-y-2 border-white  flex flex-col p-2 mb-5" >
+                <p>from - <strong>{entry.from}</strong></p>
+                <p>to - <strong>{entry.to}</strong> </p>
               </div>
 
               <MDXRendering content={entry.content} />
-              <button className="absolute left-[45%] bottom-3" onClick={toggleExpand}>
+              <button className="absolute lg:left-[45%] left-[30%] bottom-3" onClick={toggleExpand}>
                 {isExpanded ? "View Less" : "View More"}
               </button>
               {user.id == entry.user &&

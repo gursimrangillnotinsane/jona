@@ -1,12 +1,13 @@
 "use client";
 import { useQuery, gql, ApolloClient, InMemoryCache } from "@apollo/client";
 import { useRouter } from "next/navigation";
-import { UserButton } from "@stackframe/stack";
+import { SignIn, UserButton } from "@stackframe/stack";
 import MDXRendering from "../components/mdxRenderig"; // Import the MDXRendering component
 import { useUser } from "@stackframe/stack"
 import React, { useState } from "react";
 import PathDrawing from "./motionHeart";
 import LoadingApp from "./loading";
+
 export const ENTRIES_QUERY = gql`
   query {
     entries {
@@ -28,13 +29,21 @@ const MainComponent = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const router = useRouter();
   const user = useUser();
+
   // Expose refetch as refreshEntries
   refreshEntries = refetch;
 
   if (loading) return (
     <LoadingApp />
   );
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return (
+    <>
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1>Something Went Wrong, Sign Out and Try Again</h1>
+        <button onClick={() => user.signOut()}>Sign Out</button>
+      </div>
+    </>
+  )
 
   const handleEdit = (id: number) => {
     router.push(`/edit/${id}`);

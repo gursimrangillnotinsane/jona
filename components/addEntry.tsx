@@ -30,14 +30,13 @@ import toast, { Toaster } from 'react-hot-toast';
 
 
 const CREATE_ENTRY = gql`
-  mutation ($title: String!, $content: String!, $from: String!, $to: String!,$user:String!) {
-    createEntry(title: $title, content: $content, from: $from, to: $to, user:$user) {
+  mutation ($title: String!, $content: String!, $from: String!, $to: String!) {
+    createEntry(title: $title, content: $content, from: $from, to: $to) {
       id
       title
       content
       from
       to
-      user
     }
   }
 `;
@@ -56,11 +55,9 @@ const AddEntry = () => {
     const handleSubmit = async () => {
 
         try {
-            const user = loguser.id;
-            console.log(user, title, content, from, to);
 
             await toast.promise(
-                createEntryMutation({ variables: { title, content, from, to, user } }),
+                createEntryMutation({ variables: { title, content, from, to } }),
                 {
                     loading: "Saving your entry my love...",
                     success: "Entry saved successfully!",

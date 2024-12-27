@@ -41,8 +41,8 @@ const GET_ENTRY = gql`
 `;
 
 const EDIT_ENTRY = gql`
-  mutation ($editEntryId: Int!, $title: String!, $content: String!, $from: String!, $to: String!, $user: String!) {
-    editEntry(id: $editEntryId, title: $title, content: $content, from: $from, to: $to, user: $user) {
+  mutation ($editEntryId: Int!, $title: String!, $content: String!, $from: String!, $to: String!) {
+    editEntry(id: $editEntryId, title: $title, content: $content, from: $from, to: $to) {
       id
       title
       content
@@ -92,7 +92,7 @@ const Edit = ({ id }: { id: string }) => {
         try {
             const user = logUser.id;
             await toast.promise(
-                editEntryMutation({ variables: { editEntryId: parseInt(id as string, 10), title, content, from, to, user } }),
+                editEntryMutation({ variables: { editEntryId: parseInt(id as string, 10), title, content, from, to } }),
                 {
                     loading: "Editing your entry my love...",
                     success: "Entry saved successfully!",

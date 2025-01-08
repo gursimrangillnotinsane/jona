@@ -4,8 +4,8 @@ export async function POST(req: NextRequest) {
     const url = 'https://api.stack-auth.com/api/v1/auth/sessions';
     const serverKey = process.env.STACK_SECRET_SERVER_KEY;
     const accessType = "server"
-    const clientKey = process.env.NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY;
-    const projectID = process.env.NEXT_PUBLIC_STACK_PROJECT_ID;
+    const clientKey = process.env.NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY || '';
+    const projectID = process.env.NEXT_PUBLIC_STACK_PROJECT_ID || '';
 
     if (!serverKey) {
         return NextResponse.json({ error: 'Server key is not configured' }, { status: 500 });

@@ -40,7 +40,7 @@ const MainComponent = () => {
     <>
       <div className="flex flex-col items-center justify-center h-screen">
         <h1>Something Went Wrong, Sign Out and Try Again</h1>
-        <button onClick={() => user.signOut()}>Sign Out</button>
+        <button onClick={() => user && user.signOut()}>Sign Out</button>
       </div>
     </>
   )
@@ -88,7 +88,7 @@ const MainComponent = () => {
               >
                 {isExpanded ? "View Less" : "View More"}
               </button>
-              {user.id == entry.user &&
+              {user && user.id == entry.user &&
                 <div className="flex justify-start gap-4 z-50">
                   <button onClick={() => handleEdit(entry.id)}>Edit</button>
 

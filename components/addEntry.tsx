@@ -73,7 +73,7 @@ const AddEntry = () => {
 
     useEffect(() => {
         setTitle("HAPPY ANNIVERSARY");
-        setFrom(loguser.displayName);
+        setFrom(loguser.displayName || "");
         setTo("TO MY LOVE");
         setContent("I LOVE YOU");
 
@@ -97,7 +97,7 @@ const AddEntry = () => {
                     <div className='flex'>
                         <h3>From - </h3>
                         <MDXEditor
-                            markdown={loguser.displayName}
+                            markdown={loguser.displayName || ""}
                             onChange={(e) => setFrom(e)}
                         /></div>
 

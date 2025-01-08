@@ -2,7 +2,7 @@
 // Import necessary React hooks and components
 import React, { useEffect, useRef, useState } from 'react';
 // Define cursor colors
-const CURSOR_COLORS = {
+const CURSOR_COLORS: { [key: string]: string } = {
     "h1": "green-400",
     "button": "orange-500",
     "default": "red"
@@ -20,7 +20,7 @@ const CustomCursor = () => {
 
     useEffect(() => {
         // Event listener for mouse movement
-        const handleMouseMove = (e) => {
+        const handleMouseMove = (e: MouseEvent) => {
             setPosition({
                 x: e.clientX,
                 y: e.clientY
@@ -35,11 +35,15 @@ const CustomCursor = () => {
             }, 200);
         };
         // Event listener for mouseover (hover) on HTML elements
-        const handleMouseOver = (e) => {
+        const handleMouseOver = (e: Event) => {
             // Get the HTML tag name
-            const tagName = e.target.tagName.toLowerCase();
-            // Set cursor color based on the tag, default to "sky-500"
-            setCursorColor(CURSOR_COLORS[tagName] || CURSOR_COLORS["default"]);
+            const target = e.target as HTMLElement;
+            if (target) {
+                const tagName = target.tagName.toLowerCase();
+                setCursorColor(CURSOR_COLORS[tagName as keyof typeof CURSOR_COLORS] || CURSOR_COLORS["default"]);
+                // Set cursor color based on the tag, default to "sky-500"
+                setCursorColor(CURSOR_COLORS[tagName] || CURSOR_COLORS["default"]);
+            }
         };
 
         window.addEventListener("mousemove", handleMouseMove);

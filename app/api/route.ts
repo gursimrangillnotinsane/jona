@@ -44,6 +44,11 @@ const handler = startServerAndCreateNextHandler<NextRequest, Context>(server, {
     },
 });
 
-export { handler as GET, handler as POST };
-
+// export { handler as GET, handler as POST };
+export async function GET(
+    request: Request,
+    { params }: { params: Promise<{ slug: string }> }
+) {
+    const slug = (await params).slug // 'a', 'b', or 'c'
+}
 // export { handler as GET, handler as POST };

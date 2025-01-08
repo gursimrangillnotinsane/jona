@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import LoadingApp from '@/components/loading';
 export default function Home() {
   const user = useUser({ or: 'redirect' });
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const [isTokenFetched, setIsTokenFetched] = useState(false);
 
   useEffect(() => {

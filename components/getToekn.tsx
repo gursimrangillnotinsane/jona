@@ -1,4 +1,4 @@
-export async function getAccessToken(userId) {
+export async function getAccessToken(userId: string) {
     try {
         const response = await fetch('/api/token', {
             method: 'POST',
@@ -16,6 +16,10 @@ export async function getAccessToken(userId) {
         localStorage.setItem('token', data.access_token);
         return data;
     } catch (error) {
-        console.error('Error:', error.message);
+        if (error instanceof Error) {
+            console.error('Error:', error.message);
+        } else {
+            console.error('Unexpected error:', error);
+        }
     }
 }

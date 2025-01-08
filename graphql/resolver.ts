@@ -1,13 +1,13 @@
 import prismaClient from '../lib/prisma';
 
-
+import { Context } from '../app/api/route';
 // Define subscription events
 const ENTRY_UPDATED = "ENTRY_UPDATED";
 
 export const resolvers = {
 
     Query: {
-        async entries(_: any, args: any, context: any) {
+        async entries(_: any, args: any, context: Context) {
             const { user } = context; // Access user from context
             if (!user) {
                 throw new Error("Authentication required.");
@@ -25,7 +25,7 @@ export const resolvers = {
             }
         },
 
-        async entry(_: any, args: any, context: any) {
+        async entry(_: any, args: any, context: Context) {
             const { user } = context; // Access user from context
             if (!user) {
                 throw new Error("Authentication required.");
@@ -43,7 +43,7 @@ export const resolvers = {
     },
 
     Mutation: {
-        async createEntry(_: any, args: any, context: any) {
+        async createEntry(_: any, args: any, context: Context) {
             const { user } = context; // Access user from context
             console.log('user', user)
             if (!user) {
@@ -61,7 +61,7 @@ export const resolvers = {
                         content,
                         from,
                         to,
-                        user: user.sub,
+                        user: user.sub || '',
                     },
                 });
 
@@ -75,7 +75,7 @@ export const resolvers = {
             }
         },
 
-        async editEntry(_: any, args: any, context: any) {
+        async editEntry(_: any, args: any, context: Context) {
             const { user } = context; // Access user from context
             if (!user) {
                 throw new Error("Authentication required.");
@@ -115,7 +115,7 @@ export const resolvers = {
             }
         },
 
-        async deleteEntry(_: any, args: any, context: any) {
+        async deleteEntry(_: any, args: any, context: Context) {
             const { user } = context; // Access user from context
             if (!user) {
                 throw new Error("Authentication required.");

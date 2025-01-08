@@ -5,7 +5,7 @@ import Edit from '@/components/edit';
 import { useUser } from "@stackframe/stack";
 import { use } from 'react';
 
-const edithome = ({ params }: { params: Promise<{ id: string }> }) => {
+const Edithome = ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = use(params);
     useUser({ or: 'redirect' });
     return (
@@ -15,4 +15,4 @@ const edithome = ({ params }: { params: Promise<{ id: string }> }) => {
         </ApolloProvider>
     )
 }
-export default edithome
+export default Edithome

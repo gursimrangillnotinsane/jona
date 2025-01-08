@@ -38,8 +38,9 @@ export async function POST(req: NextRequest) {
         }
 
         return NextResponse.json(data);
-    } catch (error: any) {
-        console.error('Error fetching access token:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error) {
+        const errorMessage = (error as Error).message;
+        console.error('Error fetching access token:', errorMessage);
+        return NextResponse.json({ error: error }, { status: 500 });
     }
 }

@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { refresh } from "./mainComponent";
 import '@mdxeditor/editor/style.css';
-import { useUser } from "@stackframe/stack"
 import {
     MDXEditor,
     UndoRedo,
@@ -19,7 +18,6 @@ import {
     CreateLink,
     linkDialogPlugin,
     linkPlugin,
-    ChangeAdmonitionType,
     BlockTypeSelect,
 
 } from '@mdxeditor/editor';
@@ -74,7 +72,6 @@ const Edit = ({ id }: { id: string }) => {
     const [content, setContent] = useState("");
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
-    const logUser = useUser({ or: "redirect" });
     if (loading) return (
         <LoadingApp />
     );
@@ -90,7 +87,7 @@ const Edit = ({ id }: { id: string }) => {
 
     const handleEditSubmit = async () => {
         try {
-            const user = logUser.id;
+
             await toast.promise(
                 editEntryMutation({ variables: { editEntryId: parseInt(id as string, 10), title, content, from, to } }),
                 {

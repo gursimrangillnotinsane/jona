@@ -12,13 +12,11 @@ import {
     MDXEditorMethods,
     headingsPlugin,
     listsPlugin,
-    ListsToggle,
     thematicBreakPlugin,
     InsertThematicBreak,
     CreateLink,
     linkDialogPlugin,
     linkPlugin,
-    ChangeAdmonitionType,
     BlockTypeSelect,
 
 } from '@mdxeditor/editor';
@@ -66,7 +64,7 @@ const AddEntry = () => {
             );
             refresh(); // Call the refresh function to reload data
             router.push("/");
-        } catch (err: any) {
+        } catch (err) {
             console.error("Error creating entry:", err);
         }
     };

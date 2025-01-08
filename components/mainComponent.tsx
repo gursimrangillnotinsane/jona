@@ -1,13 +1,22 @@
 "use client";
-import { useQuery, gql, ApolloClient, InMemoryCache } from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
 import { useRouter } from "next/navigation";
-import { SignIn, UserButton } from "@stackframe/stack";
+import { UserButton } from "@stackframe/stack";
 import MDXRendering from "../components/mdxRenderig"; // Import the MDXRendering component
 import { useUser } from "@stackframe/stack"
 import React, { useState } from "react";
 import PathDrawing from "./motionHeart";
 import LoadingApp from "./loading";
 
+interface Entry {
+  id: number;
+  title: string;
+  content: string;
+  from: string;
+  to: string;
+  user: string;
+  date: string;
+}
 export const ENTRIES_QUERY = gql`
   query {
     entries {
@@ -71,7 +80,7 @@ const MainComponent = () => {
           <UserButton />
         </div>
         <div className="flex flex-col items-center pb-10">
-          {data.entries.map((entry: any) => (
+          {data.entries.map((entry: Entry) => (
             <div key={entry.id} className={`card border p-4 my-4 lg:w-2/3 w-3/4 ${isExpanded ? "expanded" : ""}`}>
 
               <h2>{entry.title}</h2>

@@ -90,7 +90,7 @@ export const resolvers = {
                     where: { id },
                 });
 
-                if (entry.user !== user.sub) {
+                if (!entry || entry.user !== user.sub) {
                     throw new Error("You are not authorized to edit this entry.");
                 }
                 const updatedEntry = await prismaClient.dairy.update({

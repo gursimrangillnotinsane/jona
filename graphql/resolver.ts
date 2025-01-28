@@ -9,6 +9,7 @@ export const resolvers = {
     Query: {
         async entries(_: any, args: any, context: Context) {
             const { user } = context; // Access user from context
+            console.log('user', user)
             if (!user) {
                 throw new Error("Authentication required.");
             }
@@ -20,7 +21,9 @@ export const resolvers = {
                 });
                 return entries || [];
             } catch (error) {
-                console.error("Error fetching entries:", error);
+                if (error instanceof Error) {
+                    console.log("Error: ", error.stack)
+                }
                 throw new Error("Failed to fetch entries.");
             }
         },

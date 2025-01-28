@@ -23,11 +23,14 @@ const server = new ApolloServer<Context>({
 
 const handler = startServerAndCreateNextHandler<NextRequest, Context>(server, {
     context: async (req) => {
+
         const authorization = req.headers.get('authorization');
+
         if (authorization) {
             try {
                 const token = authorization.split(' ')[1];
                 const { payload } = await jose.jwtVerify(token, jose.createRemoteJWKSet(new URL(JWKS_URL)));
+
                 return { req, user: payload };
             } catch (error) {
                 console.error('Error validating token:', error);
@@ -40,8 +43,16 @@ const handler = startServerAndCreateNextHandler<NextRequest, Context>(server, {
 
 // Default export for Next.js API route
 
-export async function POST(
-    req: NextRequest,
-) {
-    return await handler(req);
+// export async function POST(
+//     req: NextRequest,
+// ) {
+//     return await handler(req);
+// }
+
+export async function POST(req: NextRequest) {
+    return handler(req);
+}
+
+export async function GET(req: NextRequest) {
+    return handler(req);
 }
